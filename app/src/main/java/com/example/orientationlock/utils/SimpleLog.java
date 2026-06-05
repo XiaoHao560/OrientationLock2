@@ -1,7 +1,7 @@
-package com.tuyafeng.orientationlock.utils;
+package com.example.orientationlock.utils;
 
 import android.util.Log;
-import com.tuyafeng.orientationlock.BuildConfig;
+import com.example.orientationlock.BuildConfig;
 
 public class SimpleLog {
 

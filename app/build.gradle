@@ -149,7 +149,7 @@ android {
     
     applicationVariants.all { variant ->
         variant.outputs.all { variantOutput ->
-            def appName = "EzConvert"
+            def appName = "OrientationLock"
             def buildType = variant.buildType.name
             def versionName = variant.versionName
             def versionCode = variant.versionCode

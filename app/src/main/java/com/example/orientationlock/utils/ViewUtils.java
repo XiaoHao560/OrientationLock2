@@ -1,4 +1,4 @@
-package com.tuyafeng.orientationlock.utils;
+package com.example.orientationlock.utils;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

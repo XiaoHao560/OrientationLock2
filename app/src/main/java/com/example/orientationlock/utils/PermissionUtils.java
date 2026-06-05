@@ -1,4 +1,4 @@
-package com.tuyafeng.orientationlock.utils;
+package com.example.orientationlock.utils;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.provider.Settings;
 
-import com.tuyafeng.orientationlock.BuildConfig;
+import com.example.orientationlock.BuildConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

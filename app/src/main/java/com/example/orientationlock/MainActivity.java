@@ -1,4 +1,4 @@
-package com.tuyafeng.orientationlock;
+package com.example.orientationlock;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.tuyafeng.orientationlock.preference.PreferenceManager;
-import com.tuyafeng.orientationlock.service.OrientationLockService;
-import com.tuyafeng.orientationlock.utils.*;
+import com.example.orientationlock.preference.PreferenceManager;
+import com.example.orientationlock.service.OrientationLockService;
+import com.example.orientationlock.utils.*;
 
 import java.util.List;
 

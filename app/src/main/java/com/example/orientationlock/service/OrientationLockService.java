@@ -1,4 +1,4 @@
-package com.tuyafeng.orientationlock.service;
+package com.example.orientationlock.service;
 
 import android.annotation.TargetApi;
 import android.app.*;
@@ -15,11 +15,11 @@ import android.view.View;
 import android.view.WindowManager;
 
 import android.widget.Space;
-import com.tuyafeng.orientationlock.BuildConfig;
-import com.tuyafeng.orientationlock.MainActivity;
-import com.tuyafeng.orientationlock.R;
+import com.example.orientationlock.BuildConfig;
+import com.example.orientationlock.MainActivity;
+import com.example.orientationlock.R;
 
-import com.tuyafeng.orientationlock.utils.SimpleLog;
+import com.example.orientationlock.utils.SimpleLog;
 
 public class OrientationLockService extends Service {
 

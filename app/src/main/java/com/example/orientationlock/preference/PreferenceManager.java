@@ -1,4 +1,4 @@
-package com.tuyafeng.orientationlock.preference;
+package com.example.orientationlock.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
