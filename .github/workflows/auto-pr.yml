@@ -1,0 +1,118 @@
+name: Auto PR on Push
+
+on:
+  push:
+    branches:
+      - 'feat/**'
+      - 'fix/**'
+      - 'release/**'
+      - 'refactor/**'
+      - 'ref/**'
+      - 'perf/**'
+      - 'chore/**'
+      - 'build/**'
+      - 'ui/**'
+      - 'dev'
+      - 'dev-*'
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Debug Git & File Status
+        run: |
+          echo "Current branch: ${{ github.ref_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Changelog path: change_log/changelog.md"
+          echo ""
+          echo "=== Branches ==="
+          git branch -a
+          echo ""
+          echo "=== Recent commits ==="
+          git log --oneline -5
+          echo ""
+          echo "=== Checking if changelog exists ==="
+          ls -la change_log/changelog.md 2>/dev/null || echo "❌ change_log/changelog.md not found!"
+          ls -la change_log/ 2>/dev/null || echo "❌ change_log/ directory not found!"
+          pwd
+          echo ""
+          echo "=== Git diff preview ==="
+          git diff origin/main..HEAD -- change_log/changelog.md || echo "⚠️ Diff may have issues"
+
+      - name: Extract new changelog entries
+        id: changelog
+        run: |
+          DESC_FILE="change_log/changelog.md"
+          
+          if [ ! -f "$DESC_FILE" ]; then
+            echo "❌ CRITICAL ERROR: $DESC_FILE not found!"
+            echo "pr_body=❌ 未找到 $DESC_FILE 文件" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          echo "Found changelog file: $DESC_FILE"
+          echo "File size: $(wc -l < "$DESC_FILE") lines"
+          echo ""
+          
+          NEW_ENTRIES=$(git diff origin/main..HEAD -- "$DESC_FILE" 2>/dev/null | \
+            grep "^+" | \
+            grep -v "^+++" | \
+            perl -nE 'say $1 if /^\+(\s*(?:[-*]|\d+[.)]|\>)\s+.+)$/' || true)
+          
+          # 调试输出
+          echo "=== Raw git diff output ==="
+          git diff origin/main..HEAD -- "$DESC_FILE" | head -20
+          echo ""
+          echo "=== Extracted entries (raw) ==="
+          echo "$NEW_ENTRIES"
+          echo ""
+          echo "=== Extracted entries (cleaned) ==="
+          echo "$NEW_ENTRIES" | sed 's/^+//'
+          
+          if [ -z "$NEW_ENTRIES" ]; then
+            {
+              echo 'pr_body<<EOF'
+              echo "## 自动创建 PR: \`${{ github.ref_name }}\`"
+              echo ""
+              echo "分支 \`${{ github.ref_name }}\` 的变更已自动创建 PR。"
+              echo ""
+              echo "**提交者:** @${{ github.actor }}"
+              echo ""
+              echo "**注意**: 虽然 commit 包含 changelog 更新，但未检测到新增条目格式。"
+              echo "这可能是格式不匹配或首次推送分支。"
+              echo 'EOF'
+            } >> "$GITHUB_OUTPUT"
+          else
+            {
+              echo 'pr_body<<EOF'
+              echo "## 变更内容"
+              echo ""
+              echo "$NEW_ENTRIES" | sed 's/^+//'
+              echo ""
+              echo "---"
+              echo "**提交者:** @${{ github.actor }} | **分支:** \`${{ github.ref_name }}\`"
+              echo 'EOF'
+            } >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ github.ref_name }}
+          destination_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: "Auto PR: ${{ github.ref_name }}"
+          pr_body: ${{ steps.changelog.outputs.pr_body }}
+          # pr_label: "automated-pr,needs-review"
+
+      - name: Show final PR body (debug)
+        run: |
+          echo "=== Final PR Body Preview ==="
+          echo "${{ steps.changelog.outputs.pr_body }}"
