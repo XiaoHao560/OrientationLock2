@@ -1,4 +1,4 @@
-# Orientation Lock
+# Orientation Lock 2
 
 <p align="center">
   <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="96" alt="App Icon" />
@@ -53,7 +53,7 @@
 ## 构建
 
 ```bash
-git clone https://github.com/XiaoHao560/OrientationLock.git
+git clone https://github.com/XiaoHao560/OrientationLock2.git
 cd OrientationLock
 ./gradlew assembleRelease
 ```
