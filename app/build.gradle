@@ -149,7 +149,7 @@ android {
     
     applicationVariants.all { variant ->
         variant.outputs.all { variantOutput ->
-            def appName = "OrientationLock"
+            def appName = "OrientationLock2"
             def buildType = variant.buildType.name
             def versionName = variant.versionName
             def versionCode = variant.versionCode
