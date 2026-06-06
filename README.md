@@ -38,10 +38,10 @@ This project is built upon the work of **Yafeng Tu**, [OrientationLock](https://
 
 We respect and preserve all original copyright notices and license terms. This continued version is also open-sourced under the **GPL-3.0** license.
 
-## New Features
+## What's New
 
-Based on the original work, we have added the following features:
-- 
+Based on the original work, we have made the following updates:
+- Raised maximum Android version support to Android 16 (API 36)
 
 ## Preview
 
