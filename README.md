@@ -46,7 +46,7 @@ Based on the original work, we have made the following updates:
 ## Preview
 
 <p align="center">
-  <img src="screenshots/preview.png" width="300" alt="Preview" />
+  <img src="screenshots/screenshot01_en.png" width="300" alt="Preview" />
 </p>
 
 ## Download
