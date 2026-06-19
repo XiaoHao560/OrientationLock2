@@ -41,7 +41,8 @@ We respect and preserve all original copyright notices and license terms. This c
 ## What's New
 
 Based on the original work, we have made the following updates:
-- Raised maximum Android version support to Android 16 (API 36)
+- Setting interface
+- Quickly restore the default direction
 
 ## Preview
 
