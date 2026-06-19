@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">方向锁定</string>
+    <string name="app_name">方向锁定2</string>
     <string name="orientation_dynamic">动态</string>
     <string name="orientation_default">默认</string>
     <string name="orientation_full_sensor">传感器方向</string>

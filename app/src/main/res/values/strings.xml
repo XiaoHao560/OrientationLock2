@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Orientation Lock</string>
+    <string name="app_name">Orientation Lock2</string>
     <string name="orientation_dynamic">Dynamic</string>
     <string name="orientation_default">Default</string>
     <string name="orientation_full_sensor">Full sensor</string>
