@@ -15,4 +15,11 @@
     <string name="running_notification_description">Orientation Lock is running for keeping the orientation</string>
     <string name="permission_required">Please grant draw over apps permission</string>
     <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="quick_recovery_title">Quick Recovery Notification</string>
+    <string name="quick_recovery_desc">When enabled, a system notification will be sent when you select a direction other than the default. Tap it to restore the default orientation.</string>
+    <string name="quick_recovery_notification_title">Orientation Locked</string>
+    <string name="quick_recovery_notification_text">Tap to restore default orientation</string>
+    <string name="channel_quick_recovery_name">Quick Recovery</string>
+    <string name="channel_quick_recovery_desc">Used for quickly restoring the default screen orientation</string>
 </resources>

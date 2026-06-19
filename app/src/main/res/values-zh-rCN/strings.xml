@@ -15,4 +15,11 @@
     <string name="running_notification_description">方向锁定正在运行以保持屏幕方向</string>
     <string name="permission_required">请允许在其他应用上层显示权限</string>
     <string name="about">关于</string>
+    <string name="settings">设置</string>
+    <string name="quick_recovery_title">快速恢复通知</string>
+    <string name="quick_recovery_desc">开启后，在选择除默认以外的方向时会发送一条系统通知，点击即可恢复默认方向</string>
+    <string name="quick_recovery_notification_title">方向已锁定</string>
+    <string name="quick_recovery_notification_text">点击恢复默认方向</string>
+    <string name="channel_quick_recovery_name">快速恢复</string>
+    <string name="channel_quick_recovery_desc">用于快速恢复默认屏幕方向</string>
 </resources>
