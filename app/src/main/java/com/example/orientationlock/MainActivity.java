@@ -134,7 +134,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         }
         findViewById(R.id.iv_about).setOnClickListener(v -> {
-            Uri uri = Uri.parse("https://github.com/tuyafeng/OrientationLock");
+            Uri uri = Uri.parse("https://github.com/XiaoHao560/OrientationLock2");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             try {
                 startActivity(intent);
