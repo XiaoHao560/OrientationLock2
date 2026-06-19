@@ -23,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <activity
+                android:name=".SettingsActivity" />
+        
         <service android:name=".service.OrientationLockService"
                  android:exported="true"/>
     </application>

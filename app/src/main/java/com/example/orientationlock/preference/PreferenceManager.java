@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 public class PreferenceManager {
 
     private static final String KEY_ORIENTATION = "orientation";
+    private static final String KEY_QUICK_NOTIFICATION_RECOVERY = "quick_notification_recovery";
 
     private static PreferenceManager sManager;
     private static SharedPreferences sPreferences;
@@ -32,11 +33,26 @@ public class PreferenceManager {
         sPreferences.edit().putInt(name, value).apply();
     }
 
+    private void putBoolean(String name, boolean value) {
+        if (name == null) {
+            return;
+        }
+        sPreferences.edit().putBoolean(name, value).apply();
+    }
+
     public void setOrientation(int orientation) {
         putInt(KEY_ORIENTATION, orientation);
     }
 
     public int getOrientation() {
         return sPreferences.getInt(KEY_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
+    public void setQuickNotificationRecovery(boolean enabled) {
+        putBoolean(KEY_QUICK_NOTIFICATION_RECOVERY, enabled);
+    }
+
+    public boolean isQuickNotificationRecovery() {
+        return sPreferences.getBoolean(KEY_QUICK_NOTIFICATION_RECOVERY, false);
     }
 }
