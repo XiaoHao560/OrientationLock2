@@ -42,7 +42,7 @@
 ## 预览
 
 <p align="center">
-  <img src="screenshots/preview.png" width="300" alt="Preview" />
+  <img src="screenshots/screenshot01_zh_cn.png" width="300" alt="Preview" />
 </p>
 
 ## 下载
