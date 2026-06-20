@@ -25,4 +25,12 @@
     <string name="tile_label">屏幕旋转</string>
     <string name="tile_settings_title">磁贴目标旋转方向</string>
     <string name="tile_settings_desc">选择点击快捷设置磁贴时所应用的目标屏幕方向</string>
+    <string name="floating_button_title">传感器悬浮按钮</string>
+    <string name="floating_button_desc">在屏幕上显示悬浮按钮，点击后按传感器方向旋转</string>
+    <string name="floating_button_position_title">调整悬浮按钮位置</string>
+    <string name="floating_button_position_desc">点击调整悬浮按钮在屏幕上的位置</string>
+    <string name="floating_button_edit_hint">拖动按钮调整位置\n调整完成后点击保存或取消</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="position_saved">位置已保存</string>
 </resources>

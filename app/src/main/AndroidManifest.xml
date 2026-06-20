@@ -30,6 +30,10 @@
         <service android:name=".service.OrientationLockService"
                  android:exported="true"/>
          
+        <service 
+            android:name=".service.FloatingButtonService"
+            android:exported="false" />
+         
         <service
             android:name=".service.OrientationTileService"
             android:icon="@drawable/ic_rotate_landscape"
