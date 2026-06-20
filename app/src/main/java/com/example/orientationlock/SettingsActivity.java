@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -29,6 +28,7 @@ public class SettingsActivity extends Activity {
     private Switch switchFloatingButton;
     private TextView tvTileSettingsDesc;
     private TextView tvFloatingButtonPosition;
+    private LinearLayout llFloatingButtonPosition;
 
     // 映射所有的方向及其对应的字符串，用于对话框展示
     private final int[] orientationValues = {
@@ -61,6 +61,7 @@ public class SettingsActivity extends Activity {
         switchFloatingButton = findViewById(R.id.switch_floating_button);
         tvTileSettingsDesc = findViewById(R.id.tv_tile_settings_desc);
         tvFloatingButtonPosition = findViewById(R.id.tv_floating_button_position);
+        llFloatingButtonPosition = findViewById(R.id.ll_floating_button_position);
 
         // 恢复快速恢复开关状态
         switchQuickRecovery.setChecked(preferenceManager.isQuickNotificationRecovery());
@@ -75,6 +76,7 @@ public class SettingsActivity extends Activity {
 
         // 悬浮按钮开关
         switchFloatingButton.setChecked(preferenceManager.isFloatingButtonEnabled());
+        updateFloatingButtonPositionEnabled(preferenceManager.isFloatingButtonEnabled());
         switchFloatingButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked && !PermissionUtils.isDrawOverlaysPermissionGranted(this)) {
                 PermissionUtils.requestDrawOverlaysPermission(this);
@@ -83,11 +85,15 @@ public class SettingsActivity extends Activity {
                 return;
             }
             preferenceManager.setFloatingButtonEnabled(isChecked);
+            updateFloatingButtonPositionEnabled(isChecked);
             updateFloatingButtonVisibility(isChecked);
         });
 
         // 悬浮按钮位置设置
-        findViewById(R.id.ll_floating_button_position).setOnClickListener(v -> {
+        llFloatingButtonPosition.setOnClickListener(v -> {
+            if (!preferenceManager.isFloatingButtonEnabled()) {
+                return;
+            }
             if (!PermissionUtils.isDrawOverlaysPermissionGranted(this)) {
                 PermissionUtils.requestDrawOverlaysPermission(this);
                 Toast.makeText(this, R.string.permission_required, Toast.LENGTH_SHORT).show();
@@ -103,6 +109,15 @@ public class SettingsActivity extends Activity {
         findViewById(R.id.ll_tile_settings).setOnClickListener(v -> showTileOrientationDialog());
     }
 
+    // 同步位置选项可用性状态
+    private void updateFloatingButtonPositionEnabled(boolean enabled) {
+        llFloatingButtonPosition.setEnabled(enabled);
+        llFloatingButtonPosition.setClickable(enabled);
+        llFloatingButtonPosition.setFocusable(enabled);
+        llFloatingButtonPosition.setAlpha(enabled ? 1.0f : 0.4f);
+    }
+
+    // 启动或停止悬浮按钮服务
     private void updateFloatingButtonVisibility(boolean enabled) {
         Intent intent = new Intent(this, FloatingButtonService.class);
         if (enabled) {
@@ -127,9 +142,9 @@ public class SettingsActivity extends Activity {
         } else {
             startService(ensureIntent);
         }
-        
+
         WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        
+
         // 根布局
         LinearLayout rootLayout = new LinearLayout(this);
         rootLayout.setOrientation(LinearLayout.VERTICAL);
@@ -141,7 +156,7 @@ public class SettingsActivity extends Activity {
                 ViewUtils.dp(this, 24),
                 ViewUtils.dp(this, 20)
         );
-        
+
         // 提示文字
         TextView hintText = new TextView(this);
         hintText.setText(R.string.floating_button_edit_hint);
@@ -149,7 +164,7 @@ public class SettingsActivity extends Activity {
         hintText.setTextSize(16);
         hintText.setGravity(Gravity.CENTER);
         hintText.setLineSpacing(ViewUtils.dp(this, 4), 1.2f);
-        
+
         // 按钮容器
         LinearLayout buttonContainer = new LinearLayout(this);
         buttonContainer.setOrientation(LinearLayout.HORIZONTAL);
@@ -159,7 +174,7 @@ public class SettingsActivity extends Activity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         containerParams.setMargins(0, ViewUtils.dp(this, 16), 0, 0);
         buttonContainer.setLayoutParams(containerParams);
-        
+
         // 取消按钮
         Button cancelButton = new Button(this);
         cancelButton.setText(R.string.cancel);
@@ -168,37 +183,37 @@ public class SettingsActivity extends Activity {
                 ViewUtils.dp(this, 40));
         btnParams.setMargins(ViewUtils.dp(this, 8), 0, ViewUtils.dp(this, 8), 0);
         cancelButton.setLayoutParams(btnParams);
-        
+
         // 保存按钮
         Button saveButton = new Button(this);
         saveButton.setText(R.string.save);
         saveButton.setLayoutParams(btnParams);
-        
+
         buttonContainer.addView(cancelButton);
         buttonContainer.addView(saveButton);
-        
+
         rootLayout.addView(hintText);
         rootLayout.addView(buttonContainer);
-        
+
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                         ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                         : WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE 
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                 android.graphics.PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.CENTER;
-        
+
         // 先让服务进入编辑模式
         Intent editIntent = new Intent(this, FloatingButtonService.class);
         editIntent.setAction(FloatingButtonService.ACTION_ENTER_EDIT_MODE);
         startService(editIntent);
-        
+
         // 显示提示面板
         windowManager.addView(rootLayout, params);
-        
+
         // 统一的关闭处理
         View.OnClickListener dismissListener = v -> {
             boolean save = (v == saveButton);
@@ -211,7 +226,7 @@ public class SettingsActivity extends Activity {
                 Toast.makeText(this, R.string.position_saved, Toast.LENGTH_SHORT).show();
             }
         };
-        
+
         saveButton.setOnClickListener(dismissListener);
         cancelButton.setOnClickListener(dismissListener);
     }
@@ -269,6 +284,7 @@ public class SettingsActivity extends Activity {
             if (preferenceManager.isFloatingButtonEnabled()) {
                 preferenceManager.setFloatingButtonEnabled(false);
                 switchFloatingButton.setChecked(false);
+                updateFloatingButtonPositionEnabled(false);
             }
         }
     }
