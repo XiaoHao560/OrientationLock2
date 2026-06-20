@@ -56,7 +56,7 @@ public class FloatingButtonService extends Service {
         buttonSize = ViewUtils.dp(this, 56);
 
         initScreenSize();
-        createFloatingButton();
+        createFloatingButtonView();
         initOrientationListener();
     }
 
@@ -83,7 +83,7 @@ public class FloatingButtonService extends Service {
         screenHeight = size.y;
     }
 
-    private void createFloatingButton() {
+    private void createFloatingButtonView() {
         floatingButton = new ImageView(this);
         floatingButton.setImageResource(R.drawable.ic_rotate_full_sensor);
         floatingButton.setBackgroundResource(R.drawable.bg_floating_button);
@@ -130,12 +130,6 @@ public class FloatingButtonService extends Service {
                 }
             }
         });
-
-        try {
-            windowManager.addView(floatingButton, buttonParams);
-        } catch (Exception e) {
-            SimpleLog.d(TAG, "Button already added or error: " + e.getMessage());
-        }
     }
 
     private boolean handleEditModeTouch(MotionEvent event) {

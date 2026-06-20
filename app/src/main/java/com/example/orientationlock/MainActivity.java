@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.orientationlock.preference.PreferenceManager;
+import com.example.orientationlock.service.FloatingButtonService;
 import com.example.orientationlock.service.OrientationLockService;
 import com.example.orientationlock.utils.*;
 
@@ -56,7 +57,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 ? preferenceManager.getOrientation() : ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         setOrientation(orientation);
 
+        // 初始化悬浮按钮
+        initFloatingButton();
+
         handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 从设置页返回时，再次检查悬浮按钮状态
+        initFloatingButton();
     }
 
     @Override
@@ -68,6 +79,31 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void handleIntent(Intent intent) {
         if (intent != null && ACTION_RESTORE_DEFAULT.equals(intent.getAction())) {
             setOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+    }
+
+    // 根据设置启动或停止悬浮按钮服务
+    private void initFloatingButton() {
+        if (preferenceManager == null) {
+            preferenceManager = PreferenceManager.getInstance(this);
+        }
+        boolean enabled = preferenceManager.isFloatingButtonEnabled();
+        Intent intent = new Intent(this, FloatingButtonService.class);
+        if (enabled) {
+            if (PermissionUtils.isDrawOverlaysPermissionGranted(this)) {
+                intent.setAction(FloatingButtonService.ACTION_SHOW);
+                if (Build.VERSION.SDK_INT >= 26) {
+                    startForegroundService(intent);
+                } else {
+                    startService(intent);
+                }
+            } else {
+                // 权限被撤销了，同步关闭开关
+                preferenceManager.setFloatingButtonEnabled(false);
+            }
+        } else {
+            intent.setAction(FloatingButtonService.ACTION_HIDE);
+            startService(intent);
         }
     }
 
