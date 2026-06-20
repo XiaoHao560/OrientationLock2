@@ -1,4 +1,10 @@
 # Orientation Lock 2
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/XiaoHao560/OrientationLock2?style=flat-square)
+![CI](https://github.com/XiaoHao560/OrientationLock2/workflows/ci/badge.svg)
+![GitHub all releases](https://img.shields.io/github/downloads/XiaoHao560/OrientationLock2/total?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/XiaoHao560/OrientationLock2?style=flat-square&color=informational)
+![GitHub repo size](https://img.shields.io/github/repo-size/XiaoHao560/OrientationLock2?style=flat-square&color=informational)
+![License](https://img.shields.io/github/license/XiaoHao560/OrientationLock2?style=flat-square)
 
 <p align="center">
   <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="96" alt="App Icon" />
