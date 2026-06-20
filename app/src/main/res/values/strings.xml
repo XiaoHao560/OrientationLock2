@@ -25,4 +25,12 @@
     <string name="tile_label">Orientation</string>
     <string name="tile_settings_title">Tile Target Orientation</string>
     <string name="tile_settings_desc">Select the orientation applied when tapping the quick settings tile</string>
+    <string name="floating_button_title">Sensor Floating Button</string>
+    <string name="floating_button_desc">Show a floating button on screen, tap to rotate to current sensor orientation</string>
+    <string name="floating_button_position_title">Adjust Floating Button Position</string>
+    <string name="floating_button_position_desc">Tap to adjust the floating button position on screen</string>
+    <string name="floating_button_edit_hint">Drag the button to adjust its position\nTap Save or Cancel when done</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="position_saved">Position saved</string>
 </resources>

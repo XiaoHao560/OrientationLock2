@@ -9,6 +9,9 @@ public class PreferenceManager {
     private static final String KEY_ORIENTATION = "orientation";
     private static final String KEY_QUICK_NOTIFICATION_RECOVERY = "quick_notification_recovery";
     private static final String KEY_TILE_TARGET_ORIENTATION = "tile_target_orientation";
+    private static final String KEY_FLOATING_BUTTON_ENABLED = "floating_button_enabled";
+    private static final String KEY_FLOATING_BUTTON_X = "floating_button_x";
+    private static final String KEY_FLOATING_BUTTON_Y = "floating_button_y";
 
     private static PreferenceManager sManager;
     private static SharedPreferences sPreferences;
@@ -63,5 +66,28 @@ public class PreferenceManager {
 
     public int getTileTargetOrientation() {
         return sPreferences.getInt(KEY_TILE_TARGET_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    public void setFloatingButtonEnabled(boolean enabled) {
+        putBoolean(KEY_FLOATING_BUTTON_ENABLED, enabled);
+    }
+
+    public boolean isFloatingButtonEnabled() {
+        return sPreferences.getBoolean(KEY_FLOATING_BUTTON_ENABLED, false);
+    }
+
+    public void setFloatingButtonPosition(int x, int y) {
+        sPreferences.edit()
+                .putInt(KEY_FLOATING_BUTTON_X, x)
+                .putInt(KEY_FLOATING_BUTTON_Y, y)
+                .apply();
+    }
+
+    public int getFloatingButtonX(int defaultX) {
+        return sPreferences.getInt(KEY_FLOATING_BUTTON_X, defaultX);
+    }
+
+    public int getFloatingButtonY(int defaultY) {
+        return sPreferences.getInt(KEY_FLOATING_BUTTON_Y, defaultY);
     }
 }
