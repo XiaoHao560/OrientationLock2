@@ -62,4 +62,42 @@
             />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1f000000"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_tile_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tile_settings_title"
+            android:textSize="16sp"
+            android:textColor="?android:attr/textColorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/tv_tile_settings_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/orientation_landscape"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="4dp"
+            />
+    </LinearLayout>
+
 </LinearLayout>

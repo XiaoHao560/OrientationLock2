@@ -22,4 +22,7 @@
     <string name="quick_recovery_notification_text">Tap to restore default orientation</string>
     <string name="channel_quick_recovery_name">Quick Recovery</string>
     <string name="channel_quick_recovery_desc">Used for quickly restoring the default screen orientation</string>
+    <string name="tile_label">Orientation</string>
+    <string name="tile_settings_title">Tile Target Orientation</string>
+    <string name="tile_settings_desc">Select the orientation applied when tapping the quick settings tile</string>
 </resources>
