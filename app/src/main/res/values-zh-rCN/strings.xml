@@ -22,4 +22,7 @@
     <string name="quick_recovery_notification_text">点击恢复默认方向</string>
     <string name="channel_quick_recovery_name">快速恢复</string>
     <string name="channel_quick_recovery_desc">用于快速恢复默认屏幕方向</string>
+    <string name="tile_label">屏幕旋转</string>
+    <string name="tile_settings_title">磁贴目标旋转方向</string>
+    <string name="tile_settings_desc">选择点击快捷设置磁贴时所应用的目标屏幕方向</string>
 </resources>

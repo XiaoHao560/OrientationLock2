@@ -8,6 +8,7 @@ public class PreferenceManager {
 
     private static final String KEY_ORIENTATION = "orientation";
     private static final String KEY_QUICK_NOTIFICATION_RECOVERY = "quick_notification_recovery";
+    private static final String KEY_TILE_TARGET_ORIENTATION = "tile_target_orientation";
 
     private static PreferenceManager sManager;
     private static SharedPreferences sPreferences;
@@ -54,5 +55,13 @@ public class PreferenceManager {
 
     public boolean isQuickNotificationRecovery() {
         return sPreferences.getBoolean(KEY_QUICK_NOTIFICATION_RECOVERY, false);
+    }
+
+    public void setTileTargetOrientation(int orientation) {
+        putInt(KEY_TILE_TARGET_ORIENTATION, orientation);
+    }
+
+    public int getTileTargetOrientation() {
+        return sPreferences.getInt(KEY_TILE_TARGET_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 }
