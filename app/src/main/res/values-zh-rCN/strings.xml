@@ -33,4 +33,13 @@
     <string name="save">保存</string>
     <string name="cancel">取消</string>
     <string name="position_saved">位置已保存</string>
+    <string name="battery_optimization_title">关闭电池优化</string>
+    <string name="battery_optimization_desc">点击允许应用在后台运行</string>
+    <string name="battery_optimization_desc_ignored">应用已被允许在后台运行</string>
+    <string name="battery_optimization_status_ignored">已允许</string>
+    <string name="battery_optimization_status_not_ignored">受限制</string>
+    <string name="battery_optimization_already_ignored">已关闭优化</string>
+    <string name="battery_optimization_dialog_title">后台运行限制</string>
+    <string name="battery_optimization_dialog_message">为了确保方向锁定服务能够在后台持续运行，请为本应用关闭电池优化</string>
+    <string name="go_to_settings">去设置</string>
 </resources>

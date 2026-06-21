@@ -5,8 +5,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,6 +32,9 @@ public class SettingsActivity extends Activity {
     private TextView tvTileSettingsDesc;
     private TextView tvFloatingButtonPosition;
     private LinearLayout llFloatingButtonPosition;
+    private LinearLayout llBatteryOptimization;
+    private TextView tvBatteryOptimizationDesc;
+    private TextView tvBatteryOptimizationStatus;
 
     // 映射所有的方向及其对应的字符串，用于对话框展示
     private final int[] orientationValues = {
@@ -62,6 +68,11 @@ public class SettingsActivity extends Activity {
         tvTileSettingsDesc = findViewById(R.id.tv_tile_settings_desc);
         tvFloatingButtonPosition = findViewById(R.id.tv_floating_button_position);
         llFloatingButtonPosition = findViewById(R.id.ll_floating_button_position);
+
+        // 电池优化
+        llBatteryOptimization = findViewById(R.id.ll_battery_optimization);
+        tvBatteryOptimizationDesc = findViewById(R.id.tv_battery_optimization_desc);
+        tvBatteryOptimizationStatus = findViewById(R.id.tv_battery_optimization_status);
 
         // 恢复快速恢复开关状态
         switchQuickRecovery.setChecked(preferenceManager.isQuickNotificationRecovery());
@@ -102,11 +113,80 @@ public class SettingsActivity extends Activity {
             showPositionEditDialog();
         });
 
+        // 电池优化点击
+        llBatteryOptimization.setOnClickListener(v -> {
+            if (isBatteryOptimizationIgnored()) {
+                Toast.makeText(this, R.string.battery_optimization_already_ignored, Toast.LENGTH_SHORT).show();
+            } else {
+                showBatteryOptimizationDialog();
+            }
+        });
+
         // 初始化磁贴设置描述文本
         updateTileDesc(preferenceManager.getTileTargetOrientation());
 
         // 设置点击事件，弹出单选对话框
         findViewById(R.id.ll_tile_settings).setOnClickListener(v -> showTileOrientationDialog());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 检查权限状态，如果用户去设置里关闭了权限，同步开关状态
+        if (!PermissionUtils.isDrawOverlaysPermissionGranted(this)) {
+            if (preferenceManager.isFloatingButtonEnabled()) {
+                preferenceManager.setFloatingButtonEnabled(false);
+                switchFloatingButton.setChecked(false);
+                updateFloatingButtonPositionEnabled(false);
+            }
+        }
+
+        // 每次进入设置页都刷新电池优化状态
+        updateBatteryOptimizationStatus();
+    }
+
+    // 检查是否已忽略电池优化
+    private boolean isBatteryOptimizationIgnored() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true; // 6.0 以下无此限制
+        }
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        return pm.isIgnoringBatteryOptimizations(getPackageName());
+    }
+
+    // 刷新电池优化状态显示
+    private void updateBatteryOptimizationStatus() {
+        boolean ignored = isBatteryOptimizationIgnored();
+        if (ignored) {
+            tvBatteryOptimizationStatus.setText(R.string.battery_optimization_status_ignored);
+            tvBatteryOptimizationStatus.setTextColor(0xFF4CAF50); // 绿色
+            tvBatteryOptimizationDesc.setText(R.string.battery_optimization_desc_ignored);
+        } else {
+            tvBatteryOptimizationStatus.setText(R.string.battery_optimization_status_not_ignored);
+            tvBatteryOptimizationStatus.setTextColor(0xFFFF5722); // 红色
+            tvBatteryOptimizationDesc.setText(R.string.battery_optimization_desc);
+        }
+    }
+
+    // 显示电池优化说明对话框，确认后跳转
+    private void showBatteryOptimizationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.battery_optimization_dialog_title)
+                .setMessage(R.string.battery_optimization_dialog_message)
+                .setPositiveButton(R.string.go_to_settings, (dialog, which) -> {
+                    try {
+                        Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        // 部分定制 ROM 不支持直接跳转， fallback 到应用详情
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     // 同步位置选项可用性状态
@@ -195,6 +275,7 @@ public class SettingsActivity extends Activity {
         rootLayout.addView(hintText);
         rootLayout.addView(buttonContainer);
 
+        // 中间提示面板
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -272,19 +353,6 @@ public class SettingsActivity extends Activity {
                 switchQuickRecovery.setChecked(false);
                 preferenceManager.setQuickNotificationRecovery(false);
                 Toast.makeText(this, R.string.permission_required, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // 检查权限状态，如果用户去设置里关闭了权限，同步开关状态
-        if (!PermissionUtils.isDrawOverlaysPermissionGranted(this)) {
-            if (preferenceManager.isFloatingButtonEnabled()) {
-                preferenceManager.setFloatingButtonEnabled(false);
-                switchFloatingButton.setChecked(false);
-                updateFloatingButtonPositionEnabled(false);
             }
         }
     }
