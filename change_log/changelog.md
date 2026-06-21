@@ -1,13 +1,13 @@
 ## [changelog] 2026-06-21
 
-### 新增 - newly added
+### 新增 - Added
 
-### 修复 - repair
+### 修复 - Fixed
 
-### 优化 - optimization
+### 优化 - Improved
 
-### 变更 - change
+### 变更 - Changed
 
-### 移除 - to remove
+### 移除 - Removed
 
-### 代码变更 - Code change
+### 代码变更 - Code Changes
