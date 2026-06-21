@@ -49,6 +49,9 @@ We respect and preserve all original copyright notices and license terms. This c
 Based on the original work, we have made the following updates:
 - Setting interface
 - Quickly restore the default direction
+- Lock the direction of the tile quick settings
+- The floating button sets the screen orientation
+- Turn off battery optimization settings
 
 ## Preview
 
