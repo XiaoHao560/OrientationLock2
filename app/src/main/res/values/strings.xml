@@ -33,4 +33,13 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="position_saved">Position saved</string>
+    <string name="battery_optimization_title">Ignore Battery Optimizations</string>
+    <string name="battery_optimization_desc">Tap to allow the app to run in the background</string>
+    <string name="battery_optimization_desc_ignored">The app is allowed to run in the background</string>
+    <string name="battery_optimization_status_ignored">Allowed</string>
+    <string name="battery_optimization_status_not_ignored">Restricted</string>
+    <string name="battery_optimization_already_ignored">Already allowed</string>
+    <string name="battery_optimization_dialog_title">Background Restriction</string>
+    <string name="battery_optimization_dialog_message">To ensure the orientation lock service keeps running in the background, please disable battery optimization for this app.</string>
+    <string name="go_to_settings">Go to Settings</string>
 </resources>
