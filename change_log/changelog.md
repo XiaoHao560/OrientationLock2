@@ -1,19 +1,13 @@
-## [changelog] 2026-06-19
+## [changelog] 2026-06-21
 
-### 新增
-- New Lock the direction of the tile quick settings (issue #3)
-- New The floating button sets the screen orientation (issue #3)
-- New Turn off battery optimization settings
-- 新增 磁贴快速设置锁定方向 (issue #3)
-- 新增 悬浮按钮设置屏幕方向 (issue #3)
-- 新增 关闭电池优化设置
+### 新增 - newly added
 
-### 修复
+### 修复 - repair
 
-### 优化
+### 优化 - optimization
 
-### 变更
+### 变更 - change
 
-### 移除
+### 移除 - to remove
 
-### 代码变更
+### 代码变更 - Code change
